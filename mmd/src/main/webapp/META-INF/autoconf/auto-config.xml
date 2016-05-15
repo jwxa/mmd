@@ -7,6 +7,6 @@
     </group>
 
     <script>
-        <generate template="jdbc.properties.vm" destfile="WEB-INF/classes/jdbc.properties"/>
+        <generate template="jdbc.properties.vm" destfile="WEB-INF/classes/conf/jdbc.properties"/>
     </script>
 </config>
