@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.jwxa.dao.IHerosItemDao">
+    <!--批量插入list 需要MySql配置修改-->
+    <insert id="addItemInfo">
+        insert into T_HEROS_ITEM_INFO_0427
+        (    param_name,
+             item_name,
+             item_desc,
+             create_time,
+             update_time,
+             is_delete)
+
+        VALUES
+        <foreach collection="list" index="index" item="item" separator="," >
+            (#{item.paramName},
+            #{item.itemName},
+            #{item.itemDesc},
+            NOW(),
+            NOW(),
+            'n')
+        </foreach>
+    </insert>
+    <select id="queryItemInfoVO" resultType="com.github.jwxa.model.ItemVO">
+        select param_name as paramName,
+        item_name as itemName,
+        item_desc as itemDesc
+        from T_HEROS_ITEM_INFO
+        <if test="keyword!=null and keyword!=''">
+         where item_name like CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="pageVO.iDisplayLength >0">
+            limit #{pageVO.iDisplayStart},#{pageVO.iDisplayLength}
+        </if>
+    </select>
+</mapper>

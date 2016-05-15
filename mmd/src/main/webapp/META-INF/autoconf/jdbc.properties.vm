@@ -1,0 +1,8 @@
+#\u672C\u5730\u4E3B\u6570\u636E\u6E90
+mmd.jdbc.driverClassName=com.mysql.jdbc.Driver
+mmd.jdbc.url=${mmd_jdbc_url}
+mmd.jdbc.username=${mmd_jdbc_username}
+mmd.jdbc.password=${mmd_jdbc_password}
+mmd.jdbc.maxActive=20
+mmd.jdbc.maxIdle=50
+mmd.jdbc.minIdle=1

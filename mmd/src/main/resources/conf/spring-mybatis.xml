@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    ">
+
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"-->
+          <!--destroy-method="close" >-->
+        <!--<property name="driverClassName">-->
+            <!--<value>${mmd.jdbc.driverClassName}</value>-->
+        <!--</property>-->
+        <!--<property name="url">-->
+            <!--<value>${mmd.jdbc.url}</value>-->
+        <!--</property>-->
+        <!--<property name="username">-->
+            <!--<value>${mmd.jdbc.username}</value>-->
+        <!--</property>-->
+        <!--<property name="password">-->
+            <!--<value>${mmd.jdbc.password}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接池最大使用连接数 &ndash;&gt;-->
+        <!--<property name="maxActive">-->
+            <!--<value>20</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 初始化连接大小 &ndash;&gt;-->
+        <!--<property name="initialSize">-->
+            <!--<value>1</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 获取连接最大等待时间 &ndash;&gt;-->
+        <!--<property name="maxWait">-->
+            <!--<value>60000</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接池最大空闲 &ndash;&gt;-->
+        <!--<property name="maxIdle">-->
+            <!--<value>20</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接池最小空闲 &ndash;&gt;-->
+        <!--<property name="minIdle">-->
+            <!--<value>3</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 自动清除无用连接 &ndash;&gt;-->
+        <!--<property name="removeAbandoned">-->
+            <!--<value>true</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 清除无用连接的等待时间 &ndash;&gt;-->
+        <!--<property name="removeAbandonedTimeout">-->
+            <!--<value>180</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接属性 &ndash;&gt;-->
+        <!--<property name="connectionProperties">-->
+            <!--<value>clientEncoding=UTF-8</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- 引入jdbc配置文件 -->
+    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+
+    <!--创建jdbc数据源 -->
+    <bean id="mmd" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${mmd.jdbc.driverClassName}"/>
+        <property name="url" value="${mmd.jdbc.url}"/>
+        <property name="username" value="${mmd.jdbc.username}"/>
+        <property name="password" value="${mmd.jdbc.password}"/>
+        <property name="maxActive" value="${mmd.jdbc.maxActive}"/>
+        <property name="maxIdle" value="${mmd.jdbc.maxIdle}"/>
+        <property name="minIdle" value="${mmd.jdbc.minIdle}"/>
+    </bean>
+    <!--&lt;!&ndash;创建jdbc数据源 &ndash;&gt;-->
+    <!--<bean id="test" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+        <!--<property name="driverClassName" value="${test.jdbc.driverClassName}"/>-->
+        <!--<property name="url" value="${test.jdbc.url}"/>-->
+        <!--<property name="username" value="${test.jdbc.username}"/>-->
+        <!--<property name="password" value="${test.jdbc.password}"/>-->
+        <!--<property name="maxActive" value="${test.jdbc.maxActive}"/>-->
+        <!--<property name="maxIdle" value="${test.jdbc.maxIdle}"/>-->
+        <!--<property name="minIdle" value="${test.jdbc.minIdle}"/>-->
+    <!--</bean>-->
+
+    <!--多数据源管理-->
+    <bean id="dataSource" class="com.github.jwxa.datasource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry value-ref="mmd" key="mmd"></entry>
+                <!--<entry value-ref="test" key="test"></entry>-->
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="mmd"></property>      <!-- 默认使用mmd的数据源 -->
+    </bean>
+
+    <!-- mybatis文件配置，扫描所有mapper文件 -->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:configLocation="classpath:conf/mybatis-config.xml"
+          p:mapperLocations="classpath:mapper/*.xml"/><!-- configLocation为mybatis属性 mapperLocations为所有mapper-->
+
+    <!-- spring与mybatis整合配置，扫描所有dao -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+          p:basePackage="com.github.jwxa.dao"
+          p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
+
+    <!-- 对数据源进行事务管理 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+
+    <!-- 开启事务注解驱动 -->
+    <tx:annotation-driven />
+</beans>

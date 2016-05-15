@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.jwxa.dao.IMainPageDao">
+    <select id="verifyUserInfo" resultType="com.github.jwxa.model.UserInfo" parameterType="com.github.jwxa.model.UserInfo">
+        select 
+          id,
+          login_name as loginName,
+          login_pwd as loginPwd,
+          user_name as userName,
+          user_gender as userGender,
+          user_age as userAge,
+          email_address as emailAddress,
+          phone_num as phoneNum,
+          role
+         from T_USER_INFO where
+        login_name = #{loginName} and login_pwd = #{loginPwd} and is_delete='n'
+    </select>
+</mapper>

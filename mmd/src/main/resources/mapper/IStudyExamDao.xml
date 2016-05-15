@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.jwxa.dao.IStudyExamDao">
+    <resultMap id="BaseResultMap" type="com.github.jwxa.model.AliasVO" >
+        <result column="kind" property="kind" jdbcType="VARCHAR" />
+        <result column="alias_name" property="aliasName" jdbcType="VARCHAR" />
+        <result column="pronounce" property="pronounce" jdbcType="VARCHAR" />
+        <result column="sound_src" property="soundSrc" jdbcType="VARCHAR" />
+        <result column="ranks_num" property="ranksNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        kind, alias_name, pronounce, sound_src, ranks_num
+    </sql>
+    <select id="queryAliaListsByKind" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from T_JAPANESE_ALPHABET
+        WHERE is_delete = 'n'
+        <if test="kind!=null and kind!=''" >
+            AND kind= #{kind}
+        </if>
+        ORDER BY kind , ranks_num
+    </select>
+</mapper>

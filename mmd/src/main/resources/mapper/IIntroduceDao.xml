@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.jwxa.dao.IIntroduceDao">
+    <!--插入软件简介信息-->
+    <insert id="addIntroduceInfo" parameterType="com.github.jwxa.model.IntroduceVO">
+         INSERT INTO T_INTRODUCE_INFO ( uuid,  author,  title,  status,  create_time,  update_time,  is_delete)
+         VALUES  (#{uuid},    #{authorId}  , #{title},    #{status},    NOW(),     NOW(),    'n'  )
+    </insert>
+    <!--插入软件简介详情-->
+    <insert id="addIntroduceDetail" parameterType="com.github.jwxa.model.IntroduceVO">
+        INSERT INTO T_INTRODUCE_DETAIL (  uuid,  article_body,  create_time,  update_time,  is_delete) VALUES
+            (    #{uuid},    #{body}  ,  NOW(),    NOW(),    'n'  )
+    </insert>
+    <!--通过UserId查询其下的所有软件简介-->
+    <select id="queryIntroduceByUserId" resultType="com.github.jwxa.model.IntroduceVO">
+          SELECT
+          t.uuid,
+          t.author AS authorId,
+          t.status,
+          t.title AS title,
+          d.article_body AS body,
+          u.user_name AS author,
+          t.create_time as crateTime,
+          c.value AS statusName
+        FROM
+          T_INTRODUCE_INFO t
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_INTRODUCE_DETAIL
+            WHERE is_delete = 'n') d
+            ON t.uuid = d.uuid
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_USER_INFO
+            WHERE is_delete = 'n') u
+            ON u.id = t.author
+            LEFT JOIN t_codeinfo c ON c.key = t.status
+        WHERE t.status = #{statusCode}
+          AND t.author = #{userInfo.id}
+          AND t.is_delete = 'n'
+    </select>
+    <select id="queryIntroduceByUuid" resultType="com.github.jwxa.model.IntroduceVO">
+         SELECT
+          t.uuid,
+          t.author AS authorId,
+          t.status,
+          t.title AS title,
+          d.article_body AS body,
+          u.user_name AS author,
+          t.create_time,
+          c.value AS statusName
+        FROM
+          T_INTRODUCE_INFO t
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_INTRODUCE_DETAIL
+            WHERE is_delete = 'n') d
+            ON t.uuid = d.uuid
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_USER_INFO
+            WHERE is_delete = 'n') u
+            ON u.id = t.author
+            LEFT JOIN t_codeinfo c ON c.key = t.status
+        WHERE t.uuid = #{uuid}
+          AND t.is_delete = 'n'
+    </select>
+    <select id="queryIntroduceByUserIdAndPage" resultType="com.github.jwxa.model.IntroduceVO">
+        SELECT
+          t.uuid,
+          t.author AS authorId,
+          t.status,
+          t.title AS title,
+          d.article_body AS body,
+          u.user_name AS author,
+          t.create_time as crateTime,
+          c.value AS statusName
+        FROM
+          T_INTRODUCE_INFO t
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_INTRODUCE_DETAIL
+            WHERE is_delete = 'n') d
+            ON t.uuid = d.uuid
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_USER_INFO
+            WHERE is_delete = 'n') u
+            ON u.id = t.author
+            LEFT JOIN t_codeinfo c ON c.key = t.status
+        WHERE t.status = #{statusCode}
+          AND t.author = #{userInfo.id}
+          AND t.is_delete = 'n'
+          <if test="pageVO.iDisplayLength >0">
+              limit #{pageVO.iDisplayStart},#{pageVO.iDisplayLength}
+          </if>
+    </select>
+    <select id="queryIntroduceCountByUserId" resultType="int">
+        SELECT
+          count(1)
+        FROM
+          T_INTRODUCE_INFO t
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_INTRODUCE_DETAIL
+            WHERE is_delete = 'n') d
+            ON t.uuid = d.uuid
+          LEFT JOIN
+            (SELECT
+              *
+            FROM
+              T_USER_INFO
+            WHERE is_delete = 'n') u
+            ON u.id = t.author
+            LEFT JOIN t_codeinfo c ON c.key = t.status
+        WHERE t.status = #{statusCode}
+          AND t.author = #{userInfo.id}
+          AND t.is_delete = 'n'
+    </select>
+
+</mapper>

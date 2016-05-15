@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <group name="datasource">
+        <property name="mmd.jdbc.url" defaultValue="jdbc:mysql://127.0.0.1:3306/mmd?autoReconnect=true" description="数据库地址"/>
+        <property name="mmd.jdbc.username" defaultValue="root" description="用户名"/>
+        <property name="mmd.jdbc.password" defaultValue="root" description="密码"/>
+    </group>
+
+    <script>
+        <generate template="jdbc.properties.vm" destfile="WEB-INF/classes/jdbc.properties"/>
+    </script>
+</config>
