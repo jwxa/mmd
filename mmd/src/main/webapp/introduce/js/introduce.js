@@ -51,7 +51,7 @@ function submitIntroduce() {
         return;
     }
     $.ajax({
-        url: "submitIntroduce.do",
+        url: "submitIntroduce",
         type: "post",
         dataType: "json",
         data: {
@@ -63,7 +63,7 @@ function submitIntroduce() {
             if (resultFlag == "success") {
                 var jmpUrlFlag = window.confirm("提交成功！是否跳转到审核申请页面？");
                 if (jmpUrlFlag) {
-                    window.navigate("/myIntroduce.do");
+                    window.navigate("/myIntroduce");
                 } else {
                     return;
                 }

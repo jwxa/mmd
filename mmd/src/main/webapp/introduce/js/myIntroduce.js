@@ -34,7 +34,7 @@ $(document).ready(function () {
 });
 function submitToAudit(uuid){
     $.ajax({
-        url: "submitToAuditIntroduce.do",
+        url: "submitToAuditIntroduce",
         type: "post",
         dataType: "json",
         data: {

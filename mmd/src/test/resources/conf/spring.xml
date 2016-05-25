@@ -38,10 +38,6 @@
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
           p:cacheManager-ref="cacheManagerFactory"/>
 
-    <!--swagger-->
-    <!--<context:property-placeholder location="classpath:conf/swagger.properties"/>-->
-    <!--<bean class="MySwaggerConfig" name="swaggerConfig"/>-->
-
 
     <!-- 启动对@AspectJ注解的支持 -->
     <!--<aop:aspectj-autoproxy/>-->

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
  * Created by Jwxa on 2015/2/7.
  */
 @Controller
-@RequestMapping("/")
 @Slf4j
 public class MainPageController {
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MainPageController.class);
@@ -29,7 +28,7 @@ public class MainPageController {
      * 登陆页面
      * @return
      */
-    @RequestMapping("toLogin")
+    @RequestMapping("/toLogin")
     public String showLoginPage(){
         return "mainpage/login";
     }
@@ -39,7 +38,7 @@ public class MainPageController {
      * @return
      */
     @SystemControllerLog(description = "进入首页面")
-    @RequestMapping("index")
+    @RequestMapping("/index")
     public String showMainPage(){
         return "mainpage/index";
     }
@@ -48,7 +47,7 @@ public class MainPageController {
      * 菜单加载
      * @return
      */
-    @RequestMapping("menu")
+    @RequestMapping("/menu")
     public String showMenu(){
         return "mainpage/menu";
     }
@@ -57,7 +56,7 @@ public class MainPageController {
      * 注册
      * @return
      */
-    @RequestMapping("toRegister")
+    @RequestMapping("/toRegister")
     public String showRegisterPage(){
         return "mainpage/register";
     }
@@ -65,7 +64,7 @@ public class MainPageController {
     /**
      * 登录方法（验证用户名密码）
      */
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login(UserInfo inputUserInfo,HttpServletRequest request,HttpSession session){
         if(inputUserInfo==null){
             log.info("用户信息参数获取失败");
@@ -98,7 +97,7 @@ public class MainPageController {
      * 登出/注销方法
      */
     @SystemControllerLog(description = "登出/注销方法")
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     public String logout(HttpSession session){
         session.removeAttribute("user_info");
         return "redirect:/toLogin";
@@ -108,7 +107,7 @@ public class MainPageController {
      * 欢迎页面
      * @return
      */
-    @RequestMapping("welcome")
+    @RequestMapping("/welcome")
     public String welcome(){
         return "mainpage/welcome";
     }

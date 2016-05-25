@@ -38,7 +38,7 @@ public class StudyExamController {
      * @return
      */
     @SystemControllerLog(description = "展示五十音图")
-    @RequestMapping("alphabet")
+    @RequestMapping("/alphabet")
     public ModelAndView showJapaneseAlphabetPage(){
         ModelAndView mv = new ModelAndView("baseJapaneseAlphabet");
         Multimap<String, AliasVO> alphabetMap = studyExamService.queryAliaListsByKind(null);
@@ -48,7 +48,7 @@ public class StudyExamController {
     }
 
 
-    @RequestMapping("selectExamLevel")
+    @RequestMapping("/selectExamLevel")
     public ModelAndView showSelectExamLevelPage(HttpServletRequest request){
         String ip = request.getRemoteAddr();
         log.info("ip为{}的主机访问showSelectExamLevelPage方法，选择测试内容页面",ip);
@@ -64,7 +64,7 @@ public class StudyExamController {
      * @return
      */
     @SystemControllerLog(description = "显示基础测试题目页面")
-    @RequestMapping("baseExam")
+    @RequestMapping("/baseExam")
     @ResponseBody
     public ModelAndView showBaseExamPage(String aliasType,String createType,HttpServletRequest request){
         String path =request.getContextPath();
@@ -105,7 +105,7 @@ public class StudyExamController {
      * @return
      */
     @SystemControllerLog(description = "清理题目缓存")
-    @RequestMapping("clearExamQuestionSession")
+    @RequestMapping("/clearExamQuestionSession")
     @ResponseBody
     public Map clearExamQuestionSession(String aliasType,String createType,HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -117,7 +117,7 @@ public class StudyExamController {
     }
 
     @SystemControllerLog(description = "查看答案")
-    @RequestMapping("showBaseExamAnswer")
+    @RequestMapping("/showBaseExamAnswer")
     @ResponseBody
     public Map showBaseExamAnswer(String aliasType,String createType,String answers ,HttpServletRequest request){
         HttpSession session = request.getSession();

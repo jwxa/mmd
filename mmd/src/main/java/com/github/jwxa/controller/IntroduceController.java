@@ -23,7 +23,6 @@ import java.util.*;
  * Created by Jwxa on 2015/2/8.
  */
 @Controller
-@RequestMapping("/")
 @Slf4j
 public class IntroduceController {
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IntroduceController.class);
@@ -31,12 +30,12 @@ public class IntroduceController {
     @Resource
     private IIntroduceService introduceService;
 
-    @RequestMapping("introduce")
+    @RequestMapping("/introduce")
     public String showIntroduce(){
         return "introduce/introduce";
     }
 
-    @RequestMapping("submitIntroduce")
+    @RequestMapping("/submitIntroduce")
     @ResponseBody
     public Map<String,Object> submitIntroduce(IntroduceVO introduceVO,HttpServletRequest request){
         //提交软件简介
@@ -72,7 +71,7 @@ public class IntroduceController {
      * @return
      */
     //TODO 由于是前台分页 如果数据十分大会导致效率低下 下面写一个AJAX分页的例子
-    @RequestMapping("myIntroduce")
+    @RequestMapping("/myIntroduce")
     public String showMyIntroduce(HttpServletRequest request){
         String ip = request.getRemoteAddr();
         log.info("ip为{}的主机访问showMyIntroduce方法，获取未提交审核的所有软件简介",ip);
@@ -89,7 +88,7 @@ public class IntroduceController {
      * @param request
      * @return
      */
-    @RequestMapping("myIntroduceAjaxTable")
+    @RequestMapping("/myIntroduceAjaxTable")
     public String showMyIntroduceTable(HttpServletRequest request){
         String ip = request.getRemoteAddr();
         log.info("ip为{}的主机访问showMyIntroduceTable方法，获取未提交审核的软件简介页面",ip);
@@ -101,7 +100,7 @@ public class IntroduceController {
      * @param request
      * @return
      */
-    @RequestMapping("myIntroduceAjax")
+    @RequestMapping("/myIntroduceAjax")
     @ResponseBody
     @SystemControllerLog(description = "通过AJAX获取未提交审核的软件简介")
     public String showMyIntroduceAjax(HttpServletRequest request,String aoData,String test){
@@ -154,7 +153,7 @@ public class IntroduceController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("submitToAuditIntroduce")
+    @RequestMapping("/submitToAuditIntroduce")
     public Map submitToAuditIntroduce(HttpServletRequest request,String uuid){
         String ip = request.getRemoteAddr();
         log.info("ip为{}的主机访问submitToAuditIntroduce方法，AJAX将提交审核的简介提交工作流审核",ip);

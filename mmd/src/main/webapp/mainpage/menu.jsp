@@ -42,7 +42,7 @@
                     <a href="javascript:;">
                         <b class="caret pull-right"></b>
                         <i class="fa fa-laptop"></i>
-                        <span>MMD软件</span>
+                        <span>软件</span>
                     </a>
                     <ul class="sub-menu">
                         <li><a href="introduce" target="bodyframe">简介</a></li>
@@ -57,7 +57,6 @@
                     </a>
                     <ul class="sub-menu">
                         <li><a href="imagesView" target="bodyframe">静画欣赏</a></li>
-                        <li><a href="download" target="bodyframe">模型配布</a></li>
                     </ul>
                 </li>
 
@@ -84,7 +83,16 @@
                         <li><a href="study/selectExamLevel" target="bodyframe">小测试</a></li>
                     </ul>
                 </li>
-
+                <li class="has-sub">
+                    <a href="javascript:;">
+                        <b class="caret pull-right"></b>
+                        <i class="fa fa-cogs"></i>
+                        <span>IQQ配置</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="iqq/showManagePage" target="bodyframe">管理页面</a></li>
+                    </ul>
+                </li>
                 <li class="has-sub">
                     <a href="javascript:;">
 

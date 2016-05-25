@@ -4,15 +4,12 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:cache="http://www.springframework.org/schema/cache"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/cache
       http://www.springframework.org/schema/cache/spring-cache.xsd
-      http://www.springframework.org/schema/aop
-      http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
       ">
 
     <!-- 扫描文件（自动将servicec层注入） -->
@@ -38,21 +35,11 @@
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
           p:cacheManager-ref="cacheManagerFactory"/>
 
-    <!--swagger-->
-    <context:property-placeholder location="classpath:conf/swagger.properties"/>
-    <bean class="com.github.jwxa.swagger.MySwaggerConfig" name="swaggerConfig"/>
-
-
-    <!-- 启动对@AspectJ注解的支持 -->
-    <!--<aop:aspectj-autoproxy/>-->
-    <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller-->
-    <aop:aspectj-autoproxy proxy-target-class="true" />
-
     <!--切面类用@Component注入-->
     <context:component-scan base-package="com.github.jwxa.interceptor">
     </context:component-scan>
     <!--不使用@Component则-->
-    <!--<bean class="BasedInterceptorAspect"/>-->
-    <!--<bean class="SystemLogAspect"/>-->
+    <!--<bean class="com.github.jwxa.interceptor.BasedInterceptorAspect"/>-->
+    <!--<bean class="com.github.jwxa.interceptor.SystemLogAspect"/>-->
 
 </beans>

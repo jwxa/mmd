@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ImagesViewController {
 
-    @RequestMapping("imagesView")
+    @RequestMapping("/imagesView")
     public String showImagesView(){
         return "imagesview/imagesView";
     }
