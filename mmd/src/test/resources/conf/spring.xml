@@ -4,19 +4,27 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:cache="http://www.springframework.org/schema/cache"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/cache
       http://www.springframework.org/schema/cache/spring-cache.xsd
-      http://www.springframework.org/schema/aop
-      http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
       ">
+    <!-- 将多个配置文件读取到容器中，交给Spring管理 -->
+     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+         <property name="locations">
+             <list>
+                <!-- 这里支持多种寻址方式：classpath和file -->
+                <value>classpath:conf/api.properties</value>
+                 <value>classpath:conf/jdbc.properties</value>
+              </list>
+          </property>
+      </bean>
+
 
     <!-- 扫描文件（自动将servicec层注入） -->
-    <context:component-scan base-package="com.github.jwxa"/>
+    <context:component-scan base-package="com.github.jwxa.service"/>
 
     <!-- 支持缓存注解 -->
     <cache:annotation-driven/>
@@ -38,13 +46,11 @@
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
           p:cacheManager-ref="cacheManagerFactory"/>
 
-
-    <!-- 启动对@AspectJ注解的支持 -->
-    <!--<aop:aspectj-autoproxy/>-->
-    <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller-->
-    <aop:aspectj-autoproxy proxy-target-class="true" />
     <!--切面类用@Component注入-->
-    <bean class="com.github.jwxa.interceptor.BasedInterceptorAspect"/>
-    <bean class="com.github.jwxa.interceptor.SystemLogAspect"/>
+    <context:component-scan base-package="com.github.jwxa.interceptor">
+    </context:component-scan>
+    <!--不使用@Component则-->
+    <!--<bean class="com.github.jwxa.interceptor.BasedInterceptorAspect"/>-->
+    <!--<bean class="com.github.jwxa.interceptor.SystemLogAspect"/>-->
 
 </beans>

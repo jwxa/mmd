@@ -175,7 +175,7 @@ public class PollMsgAction extends AbstractHttpAction {
                 }
             }
             // end recode == 0
-        } else if (retcode == 102||retcode==103) {
+        } else if (retcode == 102) {
             // 接连正常，没有消息到达 {"retcode":102,"errmsg":""}
             // 继续进行下一个消息请求
 

@@ -61,7 +61,7 @@
     <!--</bean>-->
 
     <!-- 引入jdbc配置文件 -->
-    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+    <!--<context:property-placeholder location="classpath:conf/jdbc.properties"/>-->
 
     <!--创建jdbc数据源 -->
     <bean id="mmd" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">

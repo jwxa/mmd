@@ -61,7 +61,7 @@
     <!--</bean>-->
 
     <!-- 引入jdbc配置文件 -->
-    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+    <!--<context:property-placeholder location="classpath:conf/jdbc.properties"/>-->
 
     <!--创建jdbc数据源 -->
     <bean id="mmd" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -73,23 +73,23 @@
         <property name="maxIdle" value="${mmd.jdbc.maxIdle}"/>
         <property name="minIdle" value="${mmd.jdbc.minIdle}"/>
     </bean>
-    <!--创建jdbc数据源 -->
-    <bean id="test" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${test.jdbc.driverClassName}"/>
-        <property name="url" value="${test.jdbc.url}"/>
-        <property name="username" value="${test.jdbc.username}"/>
-        <property name="password" value="${test.jdbc.password}"/>
-        <property name="maxActive" value="${test.jdbc.maxActive}"/>
-        <property name="maxIdle" value="${test.jdbc.maxIdle}"/>
-        <property name="minIdle" value="${test.jdbc.minIdle}"/>
-    </bean>
+    <!--&lt;!&ndash;创建jdbc数据源 &ndash;&gt;-->
+    <!--<bean id="test" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+        <!--<property name="driverClassName" value="${test.jdbc.driverClassName}"/>-->
+        <!--<property name="url" value="${test.jdbc.url}"/>-->
+        <!--<property name="username" value="${test.jdbc.username}"/>-->
+        <!--<property name="password" value="${test.jdbc.password}"/>-->
+        <!--<property name="maxActive" value="${test.jdbc.maxActive}"/>-->
+        <!--<property name="maxIdle" value="${test.jdbc.maxIdle}"/>-->
+        <!--<property name="minIdle" value="${test.jdbc.minIdle}"/>-->
+    <!--</bean>-->
 
     <!--多数据源管理-->
     <bean id="dataSource" class="com.github.jwxa.datasource.DynamicDataSource">
         <property name="targetDataSources">
             <map key-type="java.lang.String">
                 <entry value-ref="mmd" key="mmd"></entry>
-                <entry value-ref="test" key="test"></entry>
+                <!--<entry value-ref="test" key="test"></entry>-->
             </map>
         </property>
         <property name="defaultTargetDataSource" ref="mmd"></property>      <!-- 默认使用mmd的数据源 -->

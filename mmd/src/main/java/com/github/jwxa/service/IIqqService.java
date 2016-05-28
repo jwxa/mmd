@@ -1,6 +1,5 @@
 package com.github.jwxa.service;
 
-import iqq.im.event.QQActionEvent;
 
 import java.awt.image.BufferedImage;
 
@@ -23,4 +22,9 @@ public interface IIqqService {
      * @return
      */
     String checkQRCode();
+
+    /**
+     * 开始拉取消息
+     */
+    void beginPollMsg();
 }

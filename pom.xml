@@ -254,7 +254,12 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
-
+        <!--gson-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3</version>
+        </dependency>
         <!--jsonArray,jsonObject-->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -262,7 +267,12 @@
             <version>2.3</version>
             <classifier>jdk15</classifier>
         </dependency>
-
+        <!-- http://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.12</version>
+        </dependency>
         <!--AOP 注解支持 aspectj-->
         <dependency>
             <groupId>org.aspectj</groupId>

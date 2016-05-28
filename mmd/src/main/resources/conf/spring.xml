@@ -11,6 +11,17 @@
       http://www.springframework.org/schema/cache
       http://www.springframework.org/schema/cache/spring-cache.xsd
       ">
+    <!-- 将多个配置文件读取到容器中，交给Spring管理 -->
+     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+         <property name="locations">
+             <list>
+                <!-- 这里支持多种寻址方式：classpath和file -->
+                <value>classpath:conf/api.properties</value>
+                 <value>classpath:conf/jdbc.properties</value>
+              </list>
+          </property>
+      </bean>
+
 
     <!-- 扫描文件（自动将servicec层注入） -->
     <context:component-scan base-package="com.github.jwxa.service"/>

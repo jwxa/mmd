@@ -59,6 +59,27 @@ public class IqqController {
     }
 
 
+    @RequestMapping("/beginPollMsg")
+    @ResponseBody
+    public Map<String,Object> beginPollMsg(){
+        Map<String,Object> map = Maps.newHashMap();
+        boolean flag = false;
+        try {
+            iqqService.beginPollMsg();
+            flag = true;
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+        }
+        map.put("flag",flag);
+        return map;
+    }
+
+//    @RequestMapping("/sendQQMsg.do")
+//    @ResponseBody
+//    public Map<String,Object>  sendQQMsg(){
+//
+//    }
+
 
 
 

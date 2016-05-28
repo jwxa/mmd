@@ -41,7 +41,7 @@
           <p id="qrcode-status">获取中...</p>
         </div>
         <div class="stats-link">
-          <a href="javascript:;">刷新二维码 <i class="fa fa-arrow-circle-o-right"></i></a>
+          <a href="javascript:getQRCode();">刷新二维码 <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
       </div>
     </div>

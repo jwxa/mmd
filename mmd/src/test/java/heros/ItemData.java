@@ -21,7 +21,10 @@ import java.util.*;
  * Created by Jwxa on 2015/7/19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(value = {"classpath:conf/spring-activiti.xml", "classpath:conf/spring.xml", "classpath:conf/spring-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:conf/spring.xml",
+        "classpath:conf/spring-mybatis.xml",
+        "classpath:conf/spring-mvc.xml",
+        "classpath:conf/spring-activiti.xml"})
 @Slf4j
 public class ItemData {
     @Resource
