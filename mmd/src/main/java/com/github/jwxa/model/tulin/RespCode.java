@@ -1,7 +1,5 @@
 package com.github.jwxa.model.tulin;
 
-import java.util.Optional;
-
 /**
  * 标题<br>
  * User: Jwxa<br>
@@ -24,10 +22,11 @@ public enum RespCode {
     }
 
     public static Class getClass(String code){
-        Optional.of(code);
-        for(RespCode respCode: RespCode.values()){
-            if(respCode.code.equals(code)){
-                return respCode.clazz;
+        if(code!=null){
+            for(RespCode respCode: RespCode.values()){
+                if(respCode.code.equals(code)){
+                    return respCode.clazz;
+                }
             }
         }
         return null;
