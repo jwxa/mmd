@@ -56,18 +56,18 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
+                                    <th></th>
+                                    <th>あ段</th>
+                                    <th>い段</th>
+                                    <th>う段</th>
+                                    <th>え段</th>
+                                    <th>お段</th>
                                 </tr>
                                 </thead>
                                 <c:forEach var="s" begin="0" end="${fn:length(hiraganaList)-1}"  step="5">
                                     <tbody>
                                     <tr>
-                                        <th>#</th>
+                                        <th>${hiraganaList[s].aliasName}行</th>
                                         <td>${hiraganaList[s].aliasName} &nbsp;${hiraganaList[s].pronounce}</td>
                                         <td>${hiraganaList[s+1].aliasName} &nbsp;${hiraganaList[s+1].pronounce}</td>
                                         <td>${hiraganaList[s+2].aliasName} &nbsp;${hiraganaList[s+2].pronounce}</td>
@@ -112,18 +112,18 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
+                                    <th></th>
+                                    <th>あ段</th>
+                                    <th>い段</th>
+                                    <th>う段</th>
+                                    <th>え段</th>
+                                    <th>お段</th>
                                 </tr>
                                 </thead>
                                 <c:forEach var="s" begin="0" end="${fn:length(kataganaList)-1}"  step="5">
                                     <tbody>
                                     <tr>
-                                        <th>#</th>
+                                        <th>${hiraganaList[s].aliasName}行</th>
                                         <td>${kataganaList[s].aliasName} &nbsp;${kataganaList[s].pronounce}</td>
                                         <td>${kataganaList[s+1].aliasName} &nbsp;${kataganaList[s+1].pronounce}</td>
                                         <td>${kataganaList[s+2].aliasName} &nbsp;${kataganaList[s+2].pronounce}</td>

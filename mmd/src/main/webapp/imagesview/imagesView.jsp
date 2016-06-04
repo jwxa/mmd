@@ -47,8 +47,9 @@
       <c:forEach begin="1" end="50" var="s" step="1">
           <div style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 0px);" class="image gallery-group-1 isotope-item">
               <div class="image-inner">
-                  <a href="pic/%28${s}%29.jpg " data-lightbox="gallery-group-1">
-                      <img src="pic/%28${s}%29.jpg" alt="">
+                  <a href="http://7xo30g.com1.z0.glb.clouddn.com/image/mmd/%28${s}%29.jpg" data-lightbox="gallery-group-1">
+                      <img src="http://7xo30g.com1.z0.glb.clouddn.com/image/mmd/%28${s}%29.jpg?
+imageView2/2/w/480/h/320/format/jpg/interlace/0/q/78" alt="">
                   </a>
               </div>
           </div>

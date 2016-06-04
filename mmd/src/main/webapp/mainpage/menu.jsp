@@ -80,7 +80,9 @@
                     </a>
                     <ul class="sub-menu">
                         <li><a href="study/alphabet" target="bodyframe">五十音图</a></li>
+                        <li><a href="study/pronunciation" target="bodyframe">读音练习</a></li>
                         <li><a href="study/selectExamLevel" target="bodyframe">小测试</a></li>
+
                     </ul>
                 </li>
                 <li class="has-sub">

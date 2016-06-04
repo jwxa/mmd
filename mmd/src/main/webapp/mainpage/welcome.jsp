@@ -34,7 +34,7 @@
         font-weight: normal;
     }
 </style>
-<body style="background-image:url(mainpage/welcome.jpg);background-size:cover ">
+<body style="background-image:url(http://7xo30g.com1.z0.glb.clouddn.com/welcome.jpg);background-size:cover ">
 <div class="container">
     <div class="maintitle">欢迎来到MMD管理台</div>
 </div>
