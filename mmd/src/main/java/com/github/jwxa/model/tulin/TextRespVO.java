@@ -13,7 +13,7 @@ import lombok.Setter;
 public class TextRespVO extends TulinRespVO {
 
     @Override
-    public String toString() {
+    public String showText() {
         return super.getText();
     }
 }

@@ -14,7 +14,7 @@ public class UrlRespVO  extends TulinRespVO {
     private String url;
 
     @Override
-    public String toString() {
+    public String showText() {
         final StringBuffer sb = new StringBuffer();
         sb.append(super.getText()).append("\n").append("链接：").append(url);
         return sb.toString();

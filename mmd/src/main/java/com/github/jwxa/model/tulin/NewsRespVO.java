@@ -20,7 +20,7 @@ public class NewsRespVO extends TulinRespVO {
     List<NewsDetailRespVO> list;
 
     @Override
-    public String toString() {
+    public String showText() {
         final StringBuffer sb = new StringBuffer();
         sb.append(super.getText()).append(":\n");
         Random r = new Random();

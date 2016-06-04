@@ -12,10 +12,14 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class TulinRespVO implements Serializable{
+public class TulinRespVO implements Serializable,ITextShow{
 
     private String code;
 
     private String text;
 
+    @Override
+    public String showText() {
+        return null;
+    }
 }

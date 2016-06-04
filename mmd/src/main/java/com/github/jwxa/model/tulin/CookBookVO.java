@@ -19,7 +19,7 @@ public class CookBookVO extends TulinRespVO {
     private List<CookBookDetailVO> list;
 
     @Override
-    public String toString() {
+    public String showText() {
         final StringBuffer sb = new StringBuffer();
         sb.append(super.getText()).append(":\n");
         Random r = new Random();

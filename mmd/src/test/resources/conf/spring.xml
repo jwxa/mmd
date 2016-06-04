@@ -16,12 +16,21 @@
          <property name="locations">
              <list>
                 <!-- 这里支持多种寻址方式：classpath和file -->
-                <value>classpath:conf/api.properties</value>
                  <value>classpath:conf/jdbc.properties</value>
               </list>
           </property>
       </bean>
 
+    <!-- 加载资源文件 -->
+    <bean id="properties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:conf/api.properties</value>
+            </list>
+        </property>
+        <qualifier value="main" />
+    </bean>
 
     <!-- 扫描文件（自动将servicec层注入） -->
     <context:component-scan base-package="com.github.jwxa.service"/>
