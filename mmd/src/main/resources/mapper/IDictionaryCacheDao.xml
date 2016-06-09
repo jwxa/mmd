@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.jwxa.dao.IDictionaryCacheDao">
+    <select id="queryDictionaryCacheList" resultType="com.github.jwxa.model.util.DictionaryCacheVO">
+    select
+    c.key as codeKey,
+    c.value as codeValue
+    from
+    t_codeinfo c
+    where is_delete = 'n'
+        <if test="keyPrefix != null" >
+        and c.key like concat(#{keyPrefix}, '%')
+        </if>
+    </select>
+</mapper>

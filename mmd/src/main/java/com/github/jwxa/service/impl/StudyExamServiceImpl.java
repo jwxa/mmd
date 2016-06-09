@@ -1,14 +1,10 @@
 package com.github.jwxa.service.impl;
 
 import com.github.jwxa.dao.IStudyExamDao;
-import com.github.jwxa.model.QuestionVO;
+import com.github.jwxa.model.study.*;
 import com.github.jwxa.service.IStudyExamService;
 import com.github.jwxa.util.CommonConstant;
-import com.github.jwxa.model.AliasVO;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.cache.annotation.Cacheable;
@@ -211,6 +207,139 @@ public class StudyExamServiceImpl implements IStudyExamService {
             i++;
         }
         return questionVOList;
+    }
+
+
+
+    @Override
+    public Map<String, Map<String, WordVO>> createRandomAlphabet(ExamReqVO examReqVO) {
+        Multimap<String, AliasVO> alphabetMap = queryAliaListsByKind(null);
+        //测试guava table的使用
+        Collection<AliasVO> alphabetList = alphabetMap.values();
+        //行|列|假名List
+        Table<String,String,WordVO> alphabetTable = HashBasedTable.create();
+        for(AliasVO alias : alphabetList){
+            String rowNum = alias.getRanksNum().substring(0,2);
+            String colNum = alias.getRanksNum().substring(2,4);
+            WordVO wordVO = alphabetTable.get(rowNum, colNum);
+            Map<String,WordPartVO> aliasVOMap = Maps.newHashMap();
+            if(wordVO!=null){
+                aliasVOMap = alphabetTable.get(rowNum,colNum).getAliasVOMap();
+            }else{
+                wordVO = new WordVO();
+            }
+            aliasVOMap.put(alias.getKind(),new WordPartVO(alias.getAliasName()));
+            //如果不存在罗马音 则加入
+            if(!aliasVOMap.containsKey(CommonConstant.ALPHABET_ALIAS_KIND[2])){
+                aliasVOMap.put(CommonConstant.ALPHABET_ALIAS_KIND[2],new WordPartVO(alias.getPronounce()));
+            }
+            wordVO.setAliasVOMap(aliasVOMap);
+            alphabetTable.put(rowNum,colNum,wordVO);
+        }
+        //如果难度选择 按行来打乱
+        Table<String,String,WordVO> examAlphabetTable = reorderAlphabet(alphabetTable,examReqVO);
+        Map<String,Map<String,WordVO>> examMap =  examAlphabetTable.rowMap();
+        return examMap;
+    }
+
+    /**
+     * 根据选择的难度重新排序
+     * @param alphabetTable
+     * @param examReqVO
+     * @return
+     */
+    private Table<String, String, WordVO> reorderAlphabet(Table<String, String,WordVO> alphabetTable, ExamReqVO examReqVO) {
+        Table<String,String,WordVO> examAlphabetTable = HashBasedTable.create(alphabetTable);
+        //1.行重排序
+        if(CommonConstant.PRONUNCIATION_EXAM_CREATE_KIND[0].equals(examReqVO.getCreateType())
+                ||CommonConstant.PRONUNCIATION_EXAM_CREATE_KIND[2].equals(examReqVO.getCreateType())){
+            for(String row: alphabetTable.rowKeySet()){
+                //K 列 V 列对应的所有单词（平假名片假名以及罗马音）
+                Map<String,WordVO> rowMap = examAlphabetTable.row(row);
+                //创建一个新的rowMap替代原来的
+                Map<String,WordVO> newRowMap = shuffleMap(rowMap);
+                //对单词进行重新排序
+                for(Map.Entry<String,WordVO> entry:newRowMap.entrySet()){
+                    String col = entry.getKey();
+                    WordVO wordVO = entry.getValue();
+                    distinguishWord(wordVO, examReqVO);
+                    //设置显示与不显示的单词
+                    examAlphabetTable.put(row,col,wordVO);
+                }
+            }
+
+        }
+        //2.列重排序
+        if(CommonConstant.PRONUNCIATION_EXAM_CREATE_KIND[1].equals(examReqVO.getCreateType())
+                ||CommonConstant.PRONUNCIATION_EXAM_CREATE_KIND[2].equals(examReqVO.getCreateType())){
+            for(String col: alphabetTable.columnKeySet()){
+                //K 列 V 列对应的所有单词（平假名片假名以及罗马音）
+                Map<String,WordVO> colMap = examAlphabetTable.column(col);
+                //创建一个新的colMap替代原来的
+                Map<String,WordVO> newColMap = shuffleMap(colMap);
+                //对单词进行重新排序
+                for(Map.Entry<String,WordVO> entry:newColMap.entrySet()){
+                    String row = entry.getKey();
+                    WordVO wordVO = entry.getValue();
+                    examAlphabetTable.put(row,col,wordVO);
+                }
+            }
+        }
+        return examAlphabetTable;
+    }
+
+    private void distinguishWord(WordVO wordVO, ExamReqVO examReqVO) {
+        List<WordPartVO> shownList = Lists.newArrayList();
+        List<WordPartVO> unshownList = Lists.newArrayList();
+
+        WordPartVO hiragana = wordVO.getAliasVOMap().get(CommonConstant.ALPHABET_ALIAS_KIND[0]);//平假名
+        WordPartVO katagana = wordVO.getAliasVOMap().get(CommonConstant.ALPHABET_ALIAS_KIND[1]);//片假名
+        WordPartVO prounce = wordVO.getAliasVOMap().get(CommonConstant.ALPHABET_ALIAS_KIND[2]);//罗马音
+        if(CommonConstant.PRONUNCIATION_EXAM_SHOW_KIND[0].equals(examReqVO.getAliasType())){
+            shownList.add(hiragana);
+            unshownList.add(katagana);
+            unshownList.add(prounce);
+        }else if(CommonConstant.PRONUNCIATION_EXAM_SHOW_KIND[1].equals(examReqVO.getAliasType())){
+            shownList.add(katagana);
+            unshownList.add(hiragana);
+            unshownList.add(prounce);
+        }else if(CommonConstant.PRONUNCIATION_EXAM_SHOW_KIND[2].equals(examReqVO.getAliasType())){
+            shownList.add(hiragana);
+            shownList.add(katagana);
+            unshownList.add(prounce);
+        }else{
+            shownList.add(prounce);
+            unshownList.add(hiragana);
+            unshownList.add(katagana);
+        }
+        wordVO.setShownList(shownList);
+        wordVO.setUnshownList(unshownList);
+    }
+
+    /**
+     * 将原有Map无序打乱
+     * @param originMap
+     * @return
+     */
+    private <K,V> Map<K, V> shuffleMap(Map<K, V> originMap) {
+        Map shuffleMap = Maps.newHashMap();
+        List<V> values = Lists.newArrayList();
+        for(Map.Entry<K,V> entry:originMap.entrySet()){
+            V value = entry.getValue();
+            values.add(value);
+        }
+        Collections.shuffle(values);
+        int i = 0;
+        if(values.size()!=originMap.size()){
+            log.info("将原有Map无序打乱时发生错误，size不匹配:{}!={}",values.size(),originMap.size());
+            return null;
+        }
+        for(Map.Entry<K,V> entry:originMap.entrySet()){
+            K key =  entry.getKey();
+            shuffleMap.put(key,values.get(i));
+            i++;
+        }
+        return shuffleMap;
     }
 
 

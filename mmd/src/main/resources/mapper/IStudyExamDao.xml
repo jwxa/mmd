@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.jwxa.dao.IStudyExamDao">
-    <resultMap id="BaseResultMap" type="com.github.jwxa.model.AliasVO" >
+    <resultMap id="BaseResultMap" type="com.github.jwxa.model.study.AliasVO" >
         <result column="kind" property="kind" jdbcType="VARCHAR" />
         <result column="alias_name" property="aliasName" jdbcType="VARCHAR" />
         <result column="pronounce" property="pronounce" jdbcType="VARCHAR" />

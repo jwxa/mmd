@@ -1,10 +1,13 @@
 package com.github.jwxa.service;
 
-import com.github.jwxa.model.QuestionVO;
-import com.github.jwxa.model.AliasVO;
+import com.github.jwxa.model.study.ExamReqVO;
+import com.github.jwxa.model.study.QuestionVO;
+import com.github.jwxa.model.study.AliasVO;
+import com.github.jwxa.model.study.WordVO;
 import com.google.common.collect.Multimap;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -28,4 +31,11 @@ public interface IStudyExamService {
      * @return 题目实体类List
      */
     List<QuestionVO> createQuestionByAliasList(List<AliasVO> testAliasList, String createType, int questionNum);
+
+    /**
+     * 生成随机的测试用五十音图
+     * @param examReqVO 题目类型实体类
+     * @return
+     */
+    Map<String, Map<String, WordVO>> createRandomAlphabet(ExamReqVO examReqVO);
 }

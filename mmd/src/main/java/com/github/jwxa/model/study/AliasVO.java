@@ -1,4 +1,4 @@
-package com.github.jwxa.model;
+package com.github.jwxa.model.study;
 
 
 import lombok.Getter;

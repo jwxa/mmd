@@ -1,6 +1,6 @@
 package com.github.jwxa.dao;
 
-import com.github.jwxa.model.AliasVO;
+import com.github.jwxa.model.study.AliasVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
