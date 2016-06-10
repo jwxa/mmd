@@ -281,6 +281,7 @@ public class StudyExamServiceImpl implements IStudyExamService {
                 for(Map.Entry<String,WordVO> entry:newColMap.entrySet()){
                     String row = entry.getKey();
                     WordVO wordVO = entry.getValue();
+                    distinguishWord(wordVO, examReqVO);
                     examAlphabetTable.put(row,col,wordVO);
                 }
             }
@@ -288,6 +289,11 @@ public class StudyExamServiceImpl implements IStudyExamService {
         return examAlphabetTable;
     }
 
+    /**
+     * 根据不同的显示模式更改WordVO
+     * @param wordVO
+     * @param examReqVO
+     */
     private void distinguishWord(WordVO wordVO, ExamReqVO examReqVO) {
         List<WordPartVO> shownList = Lists.newArrayList();
         List<WordPartVO> unshownList = Lists.newArrayList();
